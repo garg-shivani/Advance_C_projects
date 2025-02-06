@@ -24,7 +24,9 @@ typedef struct {
     int contactCount;
 }AddressBook;
 void add(AddressBook*);
-void search(void);
+void search(AddressBook*);
+void edit(AddressBook*);
+void delete_data(AddressBook*);
 void save_addressbook_to_file(AddressBook*, const char* );
 int list(AddressBook*, const char* );
 int save(AddressBook* , const char* );

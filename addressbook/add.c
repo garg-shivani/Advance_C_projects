@@ -80,7 +80,7 @@ int validate_email(const char* email)
         {
             dotAfterAt  = 1;//makr that ther eis dot 
         }
-        //emsure that domain does not start or end with dot or hyphen
+        //ensure that domain does not start or end with dot or hyphen
         int domainStart = atIndex+ 1;
         if(email[domainStart] == '.' || email[strlen(email) - 1] == '.' || email[domainStart] == '-' || email[strlen(email) - 1] == '-')
             return FAILURE;
@@ -90,32 +90,28 @@ int validate_email(const char* email)
 }
 void add(AddressBook* addressbook)
 {
-
     Contact contact;
     contact.name[0] = '\0';
     contact.email[0] = '\0';
     contact.contact[0] = '\0';
+    contact.id = 0;
     while(1)
     {
         add_menu();
         int option;
         scanf("%d", &option);
-
-
-        
-
         switch(option)
         {
             case 0:
                 return;
             case 1:
+            {
                 printf("Enter the name:\n");
                 char name[MAX_NAME];
                 scanf("%s", name);
                 if(validate_name(name) == SUCCESS)
                 {
                     strcpy(contact.name , name);
-
                 }
                 else
                 {
@@ -123,7 +119,9 @@ void add(AddressBook* addressbook)
                 }
                 
                 break;
+            }
             case 2:
+            {
                 printf("Enter the phone number:\n");
                 char phone[MAX_CONTACT];
                 scanf("%s", phone);
@@ -137,7 +135,9 @@ void add(AddressBook* addressbook)
                 }
 
                 break;
+            }
             case 3:
+            {
                 printf("Enter the email id:\n");
                 char email[MAX_EMAIL];
                 scanf("%s", email);
@@ -150,23 +150,24 @@ void add(AddressBook* addressbook)
                     printf("Enter a valid email id\n");
                 }
                 break;
+            }
             default:
                 printf("Enter a valid option\n");
 
         }
-        if(contact.name[0] != '\0' && contact.email[0] != '\0' && contact.contact[0] != '\0')
-        {
-            
-            contact.id = addressbook->contactCount+ 1;
-            addressbook->contacts[addressbook->contactCount] = contact;
-            addressbook->contactCount++;
-            printf("contact added successfully\n");
-            break;
-        }
-        else
-        {
-            printf("Complete all fields name , email , contact , before adding a field\n");
-        }
+    if(contact.name[0] == '\0' || contact.email[0] == '\0' || contact.contact[0] == '\0')
+    {
+        printf("Complete all fields name , email , contact , before adding a field\n");
+
+    }
+    else
+    {
+        contact.id = addressbook->contactCount+ 1;
+        addressbook->contacts[addressbook->contactCount] = contact;
+        addressbook->contactCount++;
+        printf("contact added successfully\n");
+        return;
     }
 
+    }
 }

@@ -2,7 +2,7 @@
 
 void save_addressbook_to_file(AddressBook* addressbook,const char* filename )
 {
-    FILE* fp = fopen(filename, "a");
+    FILE* fp = fopen(filename, "w");
     if(fp == NULL)
     {
         printf("Error in creating file\n");
@@ -24,7 +24,6 @@ int save(AddressBook* addressbook, const char* filename)
 {
 
     char option;
-
     while (1)
     {
         printf("Enter 'N to Ignore and 'Y' to Save: " );

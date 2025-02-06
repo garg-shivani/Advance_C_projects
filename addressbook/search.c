@@ -55,25 +55,16 @@ void search_adressbook_email(AddressBook* addressbook, char* email)
 }
 void search_adressbook_s_no(AddressBook* addressbook, int s_no)
 {
-    for(int i =0;i<addressbook->contactCount;i++)
-    {
-        if(addressbook->contacts[i].id == s_no)
-        {
-            displayy(addressbook->contacts[i]);
-            return;
-        }
-    }
-    printf("Provided contact not present\n");
+
+    displayy(addressbook->contacts[s_no - 1]);
 }
-void search(void)
+void search(AddressBook* addressbook)
 {
 
     while(1)
     {
         search_menu();
         int option;
-        AddressBook addressbook;
-        load_addressbook_from_file(&addressbook, filename);
         scanf("%d", &option);
         switch(option)
         {
@@ -84,14 +75,14 @@ void search(void)
                 char name[MAX_NAME];
                 printf("Enter the name: ");
                 scanf("%s", name);
-                search_adressbook_name(&addressbook, name);
+                search_adressbook_name(addressbook, name);
                 break;
             }
             case 2:
             {   char phone[MAX_CONTACT];
                 printf("Enter the phone no.: ");
                 scanf("%s", phone);
-                search_adressbook_phone(&addressbook, phone);
+                search_adressbook_phone(addressbook, phone);
                 break;
             }
             case 3:
@@ -99,7 +90,7 @@ void search(void)
                 char email[MAX_EMAIL];
                 printf("Enter the email: ");
                 scanf("%s", email);
-                search_adressbook_email(&addressbook, email);
+                search_adressbook_email(addressbook, email);
                 break;
             }
             case 4:
@@ -107,7 +98,7 @@ void search(void)
                 int s_no;
                 printf("Enter the s. no.: ");
                 scanf("%d", &s_no);
-                search_adressbook_s_no(&addressbook, s_no);
+                search_adressbook_s_no(addressbook, s_no);
                 break;
             }
             default:
@@ -123,7 +114,4 @@ void search(void)
         }
 
     }
-
-
-
 }

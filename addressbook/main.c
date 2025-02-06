@@ -2,7 +2,13 @@
 const char* filename = "output.txt";
 void print_menu(void)
 {
-    system("clear");
+    // #ifdef _WIN32
+    //     system("cls");
+    // #elif __linux__
+    //     system("clear");
+    // #else   
+    //     printf("Unsupported operating system\n");
+    // #endif
     printf("######### Address book #########\n");
     printf("###### Features:\n\n");
     printf("0. Exit\n1. Add contact\n2. Search Contact\n3.Edit Contact\n4. Delete Contact\n5. List Contacts\n6. Save\n\nPlesae select an option:");
@@ -12,7 +18,7 @@ int load_addressbook_from_file(AddressBook *addressbook, const char* filename)
     FILE* fp = fopen(filename, "r");
     if(fp == NULL)
     {
-        printf("File not read\n");
+        printf("File not found\n");
         return FAILURE;
     }
     addressbook->contactCount = 0;
@@ -33,14 +39,30 @@ int load_addressbook_from_file(AddressBook *addressbook, const char* filename)
     printf("Addressbook loaded successfully\n");
     return SUCCESS;
 }
+void print(AddressBook* addressbook)
+{
+    for(int i =0;i<addressbook->contactCount;i++)
+    {
+        printf("Serial no.\t%d\n", addressbook->contacts[i].id);
+        printf("Name\t%s\n", addressbook->contacts[i].name);
+        printf("Phone\t%s\n", addressbook->contacts[i].contact);
+        printf("Email\t%s\n", addressbook->contacts[i].email);
+    }
+    return;
+}
 int main()
 {   
     AddressBook addressbook;
-    addressbook.contactCount = 0;
+    int ret = load_addressbook_from_file(&addressbook, filename);
+    if(ret == FAILURE)
+    {
+        addressbook.contactCount =  0;
+    }
+    // print(&addressbook);
     while(1)
     {
         print_menu();
-            int option;
+        int option;
         scanf("%d", &option);
         switch(option)
         {
@@ -52,18 +74,17 @@ int main()
                 add(&addressbook);
                 break;
             case 2:
-                search();
+                search(&addressbook);
                 break;
             case 3:
-                // edit();
+                edit(&addressbook);
                 break;
             case 4:
-                // delete();
+                delete_data(&addressbook);
                 break;
             case 5:
             {
-                AddressBook adrr;
-                if(list(&adrr, filename) == SUCCESS);
+                if(list(&addressbook, filename) == SUCCESS);
                 else
                 {
                     printf("Error while listing filecontents\n");
